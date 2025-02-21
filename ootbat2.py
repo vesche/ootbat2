@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
-import os, re, time, subprocess, shutil
+import os, re, time, subprocess, shutil, pkg_resources
 from playsound import playsound
 
 path_sysfs_power_supply = '/sys/class/power_supply'
-path_oot_low_health_wav = os.path.join(os.getcwd(), 'OOT_LowHealth.wav')
+path_oot_low_health_wav = pkg_resources.resource_filename(__name__, 'OOT_LowHealth.wav')
 low_battery_setting = 10
 
 
