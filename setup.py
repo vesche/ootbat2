@@ -10,7 +10,7 @@ with open(os.path.join(directory, 'README.md'), encoding='utf-8') as f:
 setup(
     name='ootbat2',
     py_modules=['ootbat2'],
-    version='0.1.2',
+    version='0.1.3',
     description='linux low battery alerting tool',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -19,7 +19,6 @@ setup(
     author='Austin Jackson',
     author_email='vesche@protonmail.com',
     install_requires=['playsound'],
-    data_files=[('', ['OOT_LowHealth.wav'])],
     entry_points={
         'console_scripts': [
             'ootbat2=ootbat2:main',

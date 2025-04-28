@@ -1,11 +1,33 @@
 #!/usr/bin/python
 
-import os, re, time, subprocess, shutil, pkg_resources
+import os, re, time, subprocess, shutil, requests, tempfile, sys
 from playsound import playsound
 
-path_sysfs_power_supply = '/sys/class/power_supply'
-path_oot_low_health_wav = pkg_resources.resource_filename(__name__, 'OOT_LowHealth.wav')
 low_battery_setting = 10
+path_sysfs_power_supply = '/sys/class/power_supply'
+url_wav_file = 'https://tinyurl.com/2j7xcras'
+
+
+def get_oot_low_health_wav() -> str:
+    attempts = 5
+    while attempts > 0:
+        response = requests.models.Response()
+        try:
+            response = requests.get(url_wav_file)
+        except Exception as e:
+            pass
+        if response.status_code == 200:
+            break
+        attempts -= 1
+        time.sleep(1)
+    else:
+        print('Error, could not download wav file!')
+        sys.exit(1)
+
+    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.wav')
+    temp_file.write(response.content)
+    temp_file.close()
+    return temp_file.name
 
 
 def get_number_of_batteries() -> int:
@@ -33,6 +55,19 @@ def get_battery_data(number_of_batteries: int) -> dict:
 def main():
     number_of_batteries = get_number_of_batteries()
     notify_send_exists = shutil.which('notify-send') is not None
+
+    wav_file_path = str()
+    wav_local_path1 = './OOT_LowHealth.wav'
+    wav_local_path2 = os.path.expanduser('~/media/OOT_LowHealth.wav')
+    wav_check_local1 = os.path.exists('./OOT_LowHealth.wav')
+    wav_check_local2 = os.path.exists(os.path.expanduser('~/media/OOT_LowHealth.wav'))
+    if wav_check_local1:
+        wav_file_path = wav_local_path1
+    elif wav_check_local2:
+        wav_file_path = wav_local_path2
+    else:
+        wav_file_path = get_oot_low_health_wav()
+
     try:
         while True:
             battery_data = get_battery_data(number_of_batteries)
@@ -41,7 +76,7 @@ def main():
             if (battery_percentage < low_battery_setting) and ('Discharging' in battery_statuses):
                 if notify_send_exists:
                     subprocess.run(['notify-send', 'ootbat2', 'Low battery, charge me!'])
-                playsound(path_oot_low_health_wav)
+                playsound(wav_file_path)
             time.sleep(3)
     except KeyboardInterrupt:
         pass
