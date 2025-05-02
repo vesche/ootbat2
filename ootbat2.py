@@ -59,8 +59,8 @@ def main():
     wav_file_path = str()
     wav_local_path1 = './OOT_LowHealth.wav'
     wav_local_path2 = os.path.expanduser('~/media/OOT_LowHealth.wav')
-    wav_check_local1 = os.path.exists('./OOT_LowHealth.wav')
-    wav_check_local2 = os.path.exists(os.path.expanduser('~/media/OOT_LowHealth.wav'))
+    wav_check_local1 = os.path.exists(wav_local_path1)
+    wav_check_local2 = os.path.exists(wav_local_path2)
     if wav_check_local1:
         wav_file_path = wav_local_path1
     elif wav_check_local2:

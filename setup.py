@@ -10,7 +10,7 @@ with open(os.path.join(directory, 'README.md'), encoding='utf-8') as f:
 setup(
     name='ootbat2',
     py_modules=['ootbat2'],
-    version='0.1.3',
+    version='0.1.4',
     description='linux low battery alerting tool',
     long_description=long_description,
     long_description_content_type='text/markdown',
