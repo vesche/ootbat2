@@ -1,3 +1,5 @@
 build/
 dist/
 ootbat2.egg-info/
+__pycache__/
+*.pyc

@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ootbat2"
+version = "0.1.5"
+description = "linux low battery alerting tool"
+readme = "README.md"
+license = {text = "Unlicense"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Austin Jackson", email = "vesche@protonmail.com"},
+]
+dependencies = [
+    "playsound3>=3.0",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: Public Domain",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+]
+
+[project.urls]
+Homepage = "https://github.com/vesche/ootbat2"
+
+[project.scripts]
+ootbat2 = "ootbat2.main:main"
+
+[tool.setuptools.package-data]
+ootbat2 = ["OOT_LowHealth.wav"]
